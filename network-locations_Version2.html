@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ramjee Honda - Dealer Network Locations</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f8f8f8; margin: 0; padding: 0; }
+    .container { max-width: 700px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+    h1 { color: #d32f2f; text-align: center; }
+    .location-card { background: #f1f1f1; margin: 15px 0; padding: 14px 22px; border-radius: 8px; }
+    .loc-name { font-weight: bold; color: #333; }
+    .loc-addr { font-size: 0.97em; color: #444; margin-bottom: 7px; }
+    button { background: #d32f2f; color: #fff; border: none; padding: 10px 18px; border-radius: 6px; cursor: pointer; font-size: 1em; }
+    button:hover { background: #b71c1c; }
+    .footer { text-align: center; font-size: 0.95em; color: #888; margin-top: 30px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Ramjee Honda Dealer Network</h1>
+    <p style="text-align:center;">Select a location below to get directions from your current place.</p>
+    <div id="locations"></div>
+    <div class="footer">
+      © 2025 Ramjee Honda Samastipur
+    </div>
+  </div>
+  <script>
+    const locations = [
+      {
+        name: "Ramjee Honda",
+        address: "Ramjee Honda, Near Main Branch Of LIC Office Tajpur Road Samastipur Road, Tajpur Rd, near Main LIC Office, Samastipur, Bihar 848101",
+        lat: 25.86548890232193,
+        lng: 85.77210471937532
+      },
+      {
+        name: "NILAM HONDA",
+        address: "NH322, Musrigharari, Samastipur, Bihar 848127",
+        lat: 25.799971142568534,
+        lng: 85.73564073269091
+      },
+      {
+        name: "SHIVA HONDA",
+        address: "Dalsingsarai, Samastipur, NH-28, Samastipur, Bihar 848114",
+        lat: 25.66623601828195,
+        lng: 85.82620083456287
+      },
+      {
+        name: "SHANTI HONDA",
+        address: "near MUSHKAN HOSPITAL PACHIM BAJAR, Kandhouli, Mohiuddinagar, Bihar 848501",
+        lat: 25.57850857093266,
+        lng: 85.67170911642981
+      },
+      {
+        name: "TIRUPATI HONDA",
+        address: "Badi Durga mandir, Rosera, Bihar 848210",
+        lat: 25.756267113428144,
+        lng: 86.02370959049023
+      },
+      {
+        name: "DHARAM HONDA",
+        address: "Khokasha, Narhan - Bibhutipur Rd, Bibhutipur North, Bihar 848211",
+        lat: 25.699604907105314,
+        lng: 85.97929745927185
+      },
+      {
+        name: "SHREEDEV HONDA",
+        address: "Imli Chowk, Block Road, Hasanpur, Maranchi Ujagar, Bihar 848206",
+        lat: 25.72260416629814,
+        lng: 86.19506244660894
+      },
+      {
+        name: "VAISHANVI HONDA",
+        address: "M7P6+R4C, Khairakot, Bithan, Ubhaila, Bihar 848207",
+        lat: 25.686796121120288,
+        lng: 86.26009770313911
+      }
+    ];
+
+    const container = document.getElementById('locations');
+    locations.forEach((loc, i) => {
+      const card = document.createElement('div');
+      card.className = 'location-card';
+      card.innerHTML = `<div class="loc-name">${loc.name}</div>
+        <div class="loc-addr">${loc.address}</div>
+        <button onclick="getRoute(${loc.lat},${loc.lng},'${encodeURIComponent(loc.name)}')">Get Directions</button>`;
+      container.appendChild(card);
+    });
+
+    window.getRoute = function(destLat, destLng, locName) {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          position => {
+            const srcLat = position.coords.latitude;
+            const srcLng = position.coords.longitude;
+            const gmaps = `https://www.google.com/maps/dir/?api=1&origin=${srcLat},${srcLng}&destination=${destLat},${destLng}&travelmode=driving`;
+            window.open(gmaps, '_blank');
+          },
+          error => {
+            alert('Unable to get your location. Please allow location access.');
+          }
+        );
+      } else {
+        alert('Geolocation is not supported by your browser.');
+      }
+    }
+  </script>
+</body>
+</html>
